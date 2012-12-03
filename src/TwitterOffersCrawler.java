@@ -2,6 +2,7 @@
 //password: twitter-offers-crawler
 
 import java.net.*;
+import java.util.ArrayList;
 import java.io.*;
 import org.json.*;
 import twitter4j.*;
@@ -68,12 +69,21 @@ public class TwitterOffersCrawler {
             String username = (String) tweet.get(USERNAME_KEY);
             Long tweetId = (Long) tweet.get(TWEET_ID);
             
+            //find any twitter handles within the tweet to follow
+            ArrayList<String> twitterHandles = retrieveTwitterHandles(text);
+            
             System.out.println("Tweet: " + text);
             System.out.println("Tweet ID: " + tweetId);
             System.out.println("Username: " + username);
             try {
                 twitter.retweetStatus(tweetId);
                 twitter.createFriendship(username);
+                
+                for(int j = 0; j < twitterHandles.size(); j++) {
+                	twitter.createFriendship(twitterHandles.get(j));
+                	System.out.println("Twitter Handle: " + twitterHandles.get(j));
+                	Thread.sleep(60000);
+                }
                 System.out.println("SUCCESS!\n");
                 Thread.sleep(60000);
             }
@@ -83,5 +93,35 @@ public class TwitterOffersCrawler {
             }
         }
         
+	}
+	
+	public static ArrayList<String> retrieveTwitterHandles(String tweet) {
+		ArrayList<String> twitterHandles = new ArrayList<String>();
+		String currentHandle = "";
+		boolean inHandle = false;
+		
+		for(int i = 0; i < tweet.length(); i++) {
+			char cur = tweet.charAt(i);
+			if(cur == ' ') {
+				if(currentHandle.length() > 0) {
+					twitterHandles.add(currentHandle);
+					currentHandle = "";
+				}
+				inHandle = false;
+			}
+			else if(cur == '@') {
+				currentHandle = "";
+				inHandle = true;
+			}
+			else if(inHandle) {
+				currentHandle += Character.toString(cur);
+			}
+		}
+		
+		if(inHandle && currentHandle.length() > 0) {
+			twitterHandles.add(currentHandle);
+		}
+		
+		return twitterHandles;
 	}
 }
