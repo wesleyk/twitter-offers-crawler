@@ -9,11 +9,6 @@ import twitter4j.*;
 import twitter4j.auth.AccessToken;
 
 public class TwitterOffersCrawler {
-	//Twitter API keys
-	public static final String CONSUMER_KEY = "czjE9Ghhndoe1zeMxGK4rQ";
-	public static final String CONSUMER_SECRET = "8bddKOyv6MpxkpZhtszrEHjimJf5nl5bmOm5no";
-	public static final String ACCESS_TOKEN = "966996302-XQaq6U32oMXrjHPHPYcAOQIXwMAdV1vtrseWnwCf";
-	public static final String ACCESS_SECRET = "lqLfM5KJcjJWcBhydYGmyqkvsl4sTAzTIiAYweac";
 	
 	//API response keys
 	public static final String RESULTS_KEY = "results";
