@@ -1,6 +1,3 @@
-//username: TartanWare
-//password: twitter-offers-crawler
-
 import java.net.*;
 import java.util.ArrayList;
 import java.io.*;
