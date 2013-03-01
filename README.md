@@ -11,5 +11,3 @@ Technologies
 * Twitter API
 
 Last Edited: 01/2013
-
-- Wesley
